@@ -6,11 +6,18 @@ import { productAddAction } from '../actions/productAction';
 
 const AddProduct = () => {
 
+    // utilizar useDispatch que retorna una función
+    const dispatch = useDispatch();
+
+    // realiza la llamada del action en productAction
+    const addProduct = () => dispatch( productAddAction() );
+
     const handleSubmit = e => {
         e.preventDefault();
         //Valida el formulario
         //Sin errores
-        //Con errores
+        //Agrega el producto
+        addProduct();
     }
 
     return ( 
@@ -22,7 +29,9 @@ const AddProduct = () => {
                             Agregar Nuevo Producto
                         </h2>
 
-                        <form>
+                        <form
+                            onSubmit={handleSubmit}
+                        >
                             <div className="form-group">
                                 <label>Producto</label>
                                 <input
