@@ -4,7 +4,9 @@ import {
     PRODUCT_ADD_ERROR
 } from '../types';
 
+import Swal from 'sweetalert2';
 import clientAxios from '../config/axios';
+
 
 // Crear nuevos productos
 export function productAddAction(product){
@@ -17,12 +19,26 @@ export function productAddAction(product){
 
             // Modificación en el State (sin errores)
             dispatch( addProductSuccess(product) );
+
+            // SweetAlert
+            Swal.fire(
+                'Correcto',
+                'El producto se agregó correctamente',
+                'success'
+            );
+            
         } catch (error) {
 
             console.log(error);
 
             // En caso de error, tratamiento mediante el State
             dispatch( addProductError(true) );
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Hubo un error. Intenta más tarde'
+            });
         }
     }    
 }

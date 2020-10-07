@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // Actions de Redux
 import { productAddAction } from '../actions/productAction';
 
-const AddProduct = () => {
+const AddProduct = ({history}) => {
 
     // State local del componente
     const [ name, setName] = useState('');
@@ -33,6 +33,7 @@ const AddProduct = () => {
             name,
             price
         });
+        history.push('/');
     }
 
     return ( 
