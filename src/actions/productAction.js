@@ -4,14 +4,24 @@ import {
     PRODUCT_ADD_ERROR
 } from '../types';
 
+import clientAxios from '../config/axios';
+
 // Crear nuevos productos
 export function productAddAction(product){
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch( productAdd() );
         
         try {
+            // Inserción a la API
+            await clientAxios.post('/products', product);
+
+            // Modificación en el State (sin errores)
             dispatch( addProductSuccess(product) );
         } catch (error) {
+
+            console.log(error);
+
+            // En caso de error, tratamiento mediante el State
             dispatch( addProductError(true) );
         }
     }    
