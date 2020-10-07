@@ -29,6 +29,11 @@
       "name": "Milanesa",
       "price": 250,
       "id": 6
+    },
+    {
+      "name": "Carne",
+      "price": 5000,
+      "id": 7
     }
   ]
 }
