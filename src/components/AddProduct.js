@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // Actions de Redux
@@ -6,18 +6,29 @@ import { productAddAction } from '../actions/productAction';
 
 const AddProduct = () => {
 
+    // State local del componente
+    const [ name, setName] = useState('');
+    const [ price, setPrice ] = useState(0);
+
     // utilizar useDispatch que retorna una función
     const dispatch = useDispatch();
 
     // realiza la llamada del action en productAction
-    const addProduct = () => dispatch( productAddAction() );
+    const addProduct = product => dispatch( productAddAction(product) );
 
     const handleSubmit = e => {
         e.preventDefault();
+        
         //Valida el formulario
+        if( name.trim() === '' || price <= 0 ){
+            return;
+        } 
         //Sin errores
         //Agrega el producto
-        addProduct();
+        addProduct({
+            name,
+            price
+        });
     }
 
     return ( 
@@ -39,6 +50,8 @@ const AddProduct = () => {
                                     className="form-control"
                                     placeholder="Nombre de Producto"
                                     name="name"
+                                    value={name}
+                                    onChange={e => setName(e.target.value)}
                                 />
                             </div>
 
@@ -49,6 +62,8 @@ const AddProduct = () => {
                                     className="form-control"
                                     placeholder="Precio del Producto"
                                     name="price"
+                                    value={price}
+                                    onChange={e => setPrice( Number(e.target.value) )}
                                 />
                             </div> 
                             <button
