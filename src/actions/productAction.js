@@ -93,10 +93,15 @@ export function productDeleteAction(id){
         try {
             await axiosClient.delete(`/products/${id}`);
             dispatch( productDeleteSuccess() );
+            Swal.fire(
+                'Borrado',
+                'El Producto ha sido borrado',
+                'success'
+            );
         } catch (error) {
-            
+            console.log(error);
+            dispatch( productDeleteError() );
         }
-        console.log(id);
     }
 }
 
