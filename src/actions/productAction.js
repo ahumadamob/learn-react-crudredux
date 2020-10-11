@@ -1,6 +1,8 @@
 import {
     PRODUCT_ADD, PRODUCT_ADD_SUCCESS, PRODUCT_ADD_ERROR,
-    PRODUCT_GET, PRODUCT_GET_SUCCESS, PRODUCT_GET_ERROR, PRODUCT_DELETE, PRODUCT_DELETE_SUCCESS, PRODUCT_DELETE_ERROR
+    PRODUCT_GET, PRODUCT_GET_SUCCESS, PRODUCT_GET_ERROR, 
+    PRODUCT_DELETE, PRODUCT_DELETE_SUCCESS, PRODUCT_DELETE_ERROR,
+    PRODUCT_EDIT, PRODUCT_EDIT_SUCCESS, PRODUCT_EDIT_ERROR
 } from '../types';
 
 import Swal from 'sweetalert2';
@@ -83,7 +85,7 @@ const productGetSuccess = products => ({
 });
 
 const productGetError = () => ({
-    type: PRODUCT_ADD_ERROR,
+    type: PRODUCT_GET_ERROR,
     payload: true
 });
 
@@ -119,3 +121,13 @@ const productDeleteError = () => ({
     payload: true
 });
 
+export function productEdit(product) {
+    return(dispatch) => {
+        dispatch( productEditAction(product) );
+    }
+}
+
+const productEditAction = product => ({
+    type: PRODUCT_EDIT,
+    payload: product
+})

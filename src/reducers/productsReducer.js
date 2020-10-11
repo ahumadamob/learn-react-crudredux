@@ -1,7 +1,8 @@
 import {
     PRODUCT_ADD, PRODUCT_ADD_SUCCESS, PRODUCT_ADD_ERROR,
     PRODUCT_GET, PRODUCT_GET_SUCCESS, PRODUCT_GET_ERROR,
-    PRODUCT_DELETE, PRODUCT_DELETE_SUCCESS, PRODUCT_DELETE_ERROR
+    PRODUCT_DELETE, PRODUCT_DELETE_SUCCESS, PRODUCT_DELETE_ERROR,
+    PRODUCT_EDIT, PRODUCT_EDIT_SUCCESS, PRODUCT_EDIT_ERROR
 } from '../types';
 
 // Cada reducer tiene su propio State
@@ -10,6 +11,7 @@ const initialState = {
     error: null,
     loading: false,
     toDelete: null,
+    toEdit: null,
 }
 
 export default function(state = initialState, action){
@@ -51,6 +53,11 @@ export default function(state = initialState, action){
                 ...state,
                 products: state.products.filter( product => product.id !== state.toDelete ),
                 toDelete: null
+            }
+        case PRODUCT_EDIT:
+            return {
+                ...state,
+                toEdit: action.payload
             }
         default:
             return state;
