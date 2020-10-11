@@ -1,10 +1,11 @@
 import {
     PRODUCT_ADD, PRODUCT_ADD_SUCCESS, PRODUCT_ADD_ERROR,
-    PRODUCT_GET, PRODUCT_GET_SUCCESS, PRODUCT_GET_ERROR, PRODUCT_DELETE
+    PRODUCT_GET, PRODUCT_GET_SUCCESS, PRODUCT_GET_ERROR, PRODUCT_DELETE, PRODUCT_DELETE_SUCCESS, PRODUCT_DELETE_ERROR
 } from '../types';
 
 import Swal from 'sweetalert2';
 import clientAxios from '../config/axios';
+import axiosClient from '../config/axios';
 
 
 // Crear nuevos productos
@@ -89,6 +90,12 @@ const productGetError = () => ({
 export function productDeleteAction(id){
     return async (dispatch) => {
         dispatch( productDelete(id) );
+        try {
+            await axiosClient.delete(`/products/${id}`);
+            dispatch( productDeleteSuccess() );
+        } catch (error) {
+            
+        }
         console.log(id);
     }
 }
@@ -96,5 +103,14 @@ export function productDeleteAction(id){
 const productDelete = id => ({
     type: PRODUCT_DELETE,
     payload: id
+});
+
+const productDeleteSuccess = () => ({
+    type: PRODUCT_DELETE_SUCCESS
+});
+
+const productDeleteError = () => ({
+    type: PRODUCT_DELETE_ERROR,
+    payload: true
 });
 
