@@ -2,7 +2,7 @@ import {
     PRODUCT_ADD, PRODUCT_ADD_SUCCESS, PRODUCT_ADD_ERROR,
     PRODUCT_GET, PRODUCT_GET_SUCCESS, PRODUCT_GET_ERROR, 
     PRODUCT_DELETE, PRODUCT_DELETE_SUCCESS, PRODUCT_DELETE_ERROR,
-    PRODUCT_EDIT, PRODUCT_EDIT_SUCCESS, PRODUCT_EDIT_ERROR
+    PRODUCT_EDIT, PRODUCT_UPDATE, PRODUCT_UPDATE_SUCCESS, PRODUCT_UPDATE_ERROR
 } from '../types';
 
 import Swal from 'sweetalert2';
@@ -130,4 +130,24 @@ export function productEdit(product) {
 const productEditAction = product => ({
     type: PRODUCT_EDIT,
     payload: product
+});
+
+export function productUpdateAction(product){
+    return async(dispatch) => {
+        dispatch( productUpdate(product) );
+
+        try {
+            const res = await axiosClient.put(`/products/${product.id}`, product);
+            console.log(res);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+const productUpdate = product => ({
+    type: PRODUCT_UPDATE,
+    payload: product
 })
+
+

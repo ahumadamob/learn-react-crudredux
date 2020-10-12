@@ -1,11 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { productUpdateAction } from '../actions/productAction';
 
 const EditProduct = () => {
 
+    //State del formulario
+    const[ formData, setFormData ] = useState({
+        name: '',
+        price: 0
+    });
+
     const product = useSelector(state => state.products.toEdit);
-    if(!product) return null;
+
+    useEffect( ()=> {
+        setFormData(product)
+    }, [product]);
+
     const { name, price, id } = product;
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        productUpdateAction();
+    }
+
+    const handleChange = e => {
+        setFormData({
+            ...product,
+            [e.target.name]: e.target.value
+        });
+    }
 
     return ( 
         <div className="row justify-content-center">
@@ -16,7 +39,9 @@ const EditProduct = () => {
                             Editar Producto
                         </h2>
 
-                        <form>
+                        <form
+                            onSubmit={handleSubmit}
+                        >
                             <div className="form-group">
                                 <label>Producto</label>
                                 <input
@@ -25,6 +50,7 @@ const EditProduct = () => {
                                     placeholder="Nombre de Producto"
                                     name="name"
                                     value={name}
+                                    onChange={handleChange}
                                 />
                             </div>
 
@@ -36,6 +62,7 @@ const EditProduct = () => {
                                     placeholder="Precio del Producto"
                                     name="price"
                                     value={price}
+                                    onChange={handleChange}
                                 />
                             </div> 
                             <button
