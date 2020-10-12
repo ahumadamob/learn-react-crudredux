@@ -2,7 +2,7 @@ import {
     PRODUCT_ADD, PRODUCT_ADD_SUCCESS, PRODUCT_ADD_ERROR,
     PRODUCT_GET, PRODUCT_GET_SUCCESS, PRODUCT_GET_ERROR,
     PRODUCT_DELETE, PRODUCT_DELETE_SUCCESS, PRODUCT_DELETE_ERROR,
-    PRODUCT_EDIT, PRODUCT_EDIT_SUCCESS, PRODUCT_EDIT_ERROR
+    PRODUCT_EDIT, PRODUCT_UPDATE_SUCCESS, PRODUCT_UPDATE_ERROR
 } from '../types';
 
 // Cada reducer tiene su propio State
@@ -31,6 +31,7 @@ export default function(state = initialState, action){
         case PRODUCT_ADD_ERROR:
         case PRODUCT_GET_ERROR:
         case PRODUCT_DELETE_ERROR:
+        case PRODUCT_UPDATE_ERROR:
             return {
                 ...state,
                 loading: false,
@@ -58,6 +59,13 @@ export default function(state = initialState, action){
             return {
                 ...state,
                 toEdit: action.payload
+            }
+        case PRODUCT_UPDATE_SUCCESS:
+            return {
+                ...state,
+                toEdit: null,
+                products: state.products.map( product => 
+                    product.id === action.payload.id ? product = action.payload : product )
             }
         default:
             return state;

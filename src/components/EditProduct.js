@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { productUpdateAction } from '../actions/productAction';
+import { useHistory } from 'react-router-dom';
 
 const EditProduct = () => {
+
+    const dispatch = useDispatch();
+    const history = useHistory();
 
     //State del formulario
     const[ formData, setFormData ] = useState({
@@ -16,16 +20,17 @@ const EditProduct = () => {
         setFormData(product)
     }, [product]);
 
-    const { name, price, id } = product;
+    const { name, price } = formData;
 
     const handleSubmit = e => {
         e.preventDefault();
-        productUpdateAction();
+        dispatch( productUpdateAction(formData) );
+        history.push('/');
     }
 
     const handleChange = e => {
         setFormData({
-            ...product,
+            ...formData,
             [e.target.name]: e.target.value
         });
     }

@@ -2,7 +2,7 @@
   "products": [
     {
       "name": "Amborguesa",
-      "price": 400,
+      "price": "650",
       "id": 1
     }
   ]

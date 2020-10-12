@@ -134,20 +134,29 @@ const productEditAction = product => ({
 
 export function productUpdateAction(product){
     return async(dispatch) => {
-        dispatch( productUpdate(product) );
+        dispatch( productUpdate() );
 
         try {
-            const res = await axiosClient.put(`/products/${product.id}`, product);
-            console.log(res);
+            await axiosClient.put(`/products/${product.id}`, product);
+            dispatch( productUpdateSuccess(product) );
         } catch (error) {
             console.log(error);
+            dispatch( productUpdateError() );
         }
     }
 }
 
-const productUpdate = product => ({
-    type: PRODUCT_UPDATE,
+const productUpdate = () => ({
+    type: PRODUCT_UPDATE
+});
+
+const productUpdateSuccess = product => ({
+    type: PRODUCT_UPDATE_SUCCESS,
     payload: product
-})
+});
+
+const productUpdateError = () => ({
+    type: PRODUCT_UPDATE_ERROR
+});
 
 
