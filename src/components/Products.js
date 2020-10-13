@@ -13,7 +13,7 @@ const Products = () => {
 
         const productGet = () => dispatch( productGetAction() );
         productGet();
-        
+        // eslint-disable-next-line
     }, []);
 
     const products = useSelector( state => state.products.products );

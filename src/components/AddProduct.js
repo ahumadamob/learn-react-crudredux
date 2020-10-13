@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // Actions de Redux
 import { productAddAction } from '../actions/productAction';
-import { alertShowAction } from '../actions/alertAction';
+import { alertShowAction, alertHideAction } from '../actions/alertAction';
 
 const AddProduct = ({history}) => {
 
@@ -17,6 +17,7 @@ const AddProduct = ({history}) => {
     // Acceso al state del store
     const loading = useSelector( state => state.products.loading );
     const error = useSelector( state => state.products.error);
+    const alert = useSelector( state => state.alert.alert );
 
     // realiza la llamada del action en productAction
     const addProduct = product => dispatch( productAddAction(product) );
@@ -34,6 +35,7 @@ const AddProduct = ({history}) => {
             return;
         } 
         //Sin errores
+        dispatch( alertHideAction() );
         //Agrega el producto
         addProduct({
             name,
@@ -50,6 +52,7 @@ const AddProduct = ({history}) => {
                         <h2 className="text-center mb-4 font-weight-bold">
                             Agregar Nuevo Producto
                         </h2>
+                        { alert ? <p className={alert.classes}>{alert.msg}</p> : null }
 
                         <form
                             onSubmit={handleSubmit}

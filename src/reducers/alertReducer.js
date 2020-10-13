@@ -11,6 +11,11 @@ export default function(state = initialState, action){
                 ...state,
                 alert: action.payload
             }
+        case ALERT_HIDE:
+            return {
+                ...state,
+                alert: null
+            }
         default:
             return state;
     }
